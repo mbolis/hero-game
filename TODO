@@ -1,0 +1,25 @@
+- gestione turni:
+	schedulatore temporale -> turno: action points + action duration
+		* azioni rt (movimento, guardare, raccogliere, recuperare...) => costo = K/speed
+		* azioni prolungate (indossare, esaminare, cercare, magia...) => costo = Q * K/speed
+	effetti che rallentano/velocizzano: haste/slow, stun (perdi azioni), daze (ritarda prossima azione)
+	traps : azioni preparate che interrompono l'azione corrente.
+		l'azione riprende subito dopo a meno che intervenga un fattore ritardante
+	PROBLEMA: relazione tra Turno e Player -> come tracciare negli attributi del turno (pt azione disponibili, azioni effettuate, slew time...) gli effetti che colpiscono il PG durante una trap?
+
+- mappe IA e visibilità:
+	una mappa pdist -> distanza continua dal Player
+	non tiene conto della visibilità degli oggetti
+	funziona in linea generale perché fa il suo dovere comunque, specialmente a corto raggio, quando il giocatore sta vedendo il Critter.
+	ESEMPIO PROBLEMA:
+
+		÷4433
+		5%322
+		43211
+		µ321@
+
+	% è un alleato invisibile del PG. Per ÷ (Critter) è una casella impassabile.
+	Diciamo che cercare di attraversare la casella occupata da % causa una trap, % effettua un'azione "gratuita" e in più ÷ è Dazed per aver cercato di attraversare una casella occupata.
+	Come fare a popolare la mappa in modo che ÷ possa cadere nell'agguato? => mantenere una mappa IA ad hoc per ÷, diversa da µ, che potrebbe aver percepito % con altri mezzi.
+	POSSIBILE SOLUZIONE: mappa IA calcolata senza tener conto della presenza di PNG / ostacoli potenzialmente nascosti, ecc, ecc -> quando il Critter arriva, decide il percorso in base a ciò che vede.
+
